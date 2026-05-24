@@ -1,166 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Letters</title>
+"use client";
 
-<!-- Whimsical font -->
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+import { useState, useEffect } from "react";
 
-<style>
-  body {
-    margin: 0;
-    background: #f7f3ee;
-    font-family: 'Quicksand', sans-serif;
-    overflow-x: hidden;
+export default function Page() {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const letters = [
+    { title: "Miss Me", text: "I miss you in quiet ways I can’t explain." },
+    { title: "Sad", text: "This feeling is temporary. You’re going to be okay." },
+    { title: "Happy", text: "Hold onto this feeling a little longer." },
+    { title: "Motivation", text: "Keep going. You’re closer than you think." },
+    { title: "Overthinking", text: "Not every thought is true. Let it pass." },
+    { title: "Night", text: "Rest now. Tomorrow will feel lighter." }
+  ];
+
+  useEffect(() => {
+    const container = document.getElementById("hearts");
+
+    for (let i = 0; i < 20; i++) {
+      const h = document.createElement("div");
+      h.innerHTML = "❤";
+      h.style.position = "absolute";
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.fontSize = Math.random() * 18 + 10 + "px";
+      h.style.animation = `float ${4 + Math.random() * 4}s linear infinite`;
+      h.style.opacity = 0.4;
+      container.appendChild(h);
+    }
+  }, []);
+
+  return (
+    <div style={styles.page}>
+      {/* HEARTS */}
+      <div id="hearts" style={styles.hearts}></div>
+
+      <h1 style={styles.title}>Open When Letters 💌</h1>
+      <p style={styles.sub}>click an envelope</p>
+
+      {/* ENVELOPES */}
+      <div style={styles.grid}>
+        {letters.map((l, i) => (
+          <div
+            key={i}
+            style={styles.envelope}
+            onClick={() => {
+              setMessage(l.text);
+              setOpen(true);
+            }}
+          >
+            <div style={styles.flap}></div>
+            <div style={styles.label}>{l.title}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* MODAL */}
+      {open && (
+        <div style={styles.modal} onClick={() => setOpen(false)}>
+          <div style={styles.paper} onClick={(e) => e.stopPropagation()}>
+            {message}
+            <div style={styles.close} onClick={() => setOpen(false)}>
+              close
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ANIMATION */}
+      <style>{`
+        @keyframes float {
+          from { transform: translateY(100vh); }
+          to { transform: translateY(-10vh); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    background: "#f7f2ec",
+    fontFamily: "sans-serif",
+    overflow: "hidden",
+    position: "relative"
+  },
+  title: {
+    textAlign: "center",
+    fontSize: "42px",
+    color: "#b30000",
+    marginTop: "20px",
+    fontFamily: "cursive"
+  },
+  sub: {
+    textAlign: "center",
+    marginTop: "-10px",
+    color: "#7a5c5c"
+  },
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+    gap: "20px",
+    padding: "30px",
+    maxWidth: "900px",
+    margin: "auto"
+  },
+  envelope: {
+    height: "110px",
+    background: "#fff",
+    border: "2px solid #b30000",
+    borderRadius: "10px",
+    position: "relative",
+    cursor: "pointer",
+    boxShadow: "0 6px 18px rgba(0,0,0,0.08)"
+  },
+  flap: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: "50px",
+    background: "#ffd6d6",
+    clipPath: "polygon(0 0, 50% 100%, 100% 0)"
+  },
+  label: {
+    position: "absolute",
+    bottom: "12px",
+    width: "100%",
+    textAlign: "center",
+    color: "#b30000",
+    fontWeight: "600"
+  },
+  modal: {
+    position: "fixed",
+    inset: 0,
+    background: "rgba(0,0,0,0.55)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  paper: {
+    background: "#fffdf9",
+    padding: "25px",
+    borderRadius: "12px",
+    width: "320px",
+    textAlign: "center",
+    fontFamily: "cursive",
+    fontSize: "20px",
+    color: "#b30000"
+  },
+  close: {
+    marginTop: "15px",
+    fontSize: "14px",
+    cursor: "pointer",
+    color: "#333"
+  },
+  hearts: {
+    position: "absolute",
+    inset: 0,
+    pointerEvents: "none"
   }
-
-  h1 {
-    text-align: center;
-    font-family: 'Dancing Script', cursive;
-    margin-top: 30px;
-    color: #b30000;
-    font-size: 48px;
-  }
-
-  /* Hearts background */
-  .heart {
-    position: absolute;
-    color: #ff4d4d;
-    font-size: 18px;
-    animation: float 6s infinite ease-in;
-    opacity: 0.6;
-  }
-
-  @keyframes float {
-    0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
-    50% { opacity: 0.7; }
-    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-  }
-
-  /* Envelope buttons */
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px;
-  }
-
-  .envelope {
-    width: 140px;
-    height: 100px;
-    background: #fff;
-    border: 2px solid #b30000;
-    border-radius: 8px;
-    position: relative;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .envelope:hover {
-    transform: scale(1.05);
-  }
-
-  .envelope:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-left: 70px solid transparent;
-    border-right: 70px solid transparent;
-    border-top: 50px solid #ffcccc;
-  }
-
-  .label {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-    font-weight: 600;
-    color: #b30000;
-  }
-
-  /* Modal */
-  .modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
-  }
-
-  .modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 300px;
-    text-align: center;
-    font-family: 'Dancing Script', cursive;
-    font-size: 22px;
-    color: #b30000;
-  }
-
-  .close {
-    margin-top: 15px;
-    cursor: pointer;
-    color: #333;
-    font-family: 'Quicksand', sans-serif;
-  }
-</style>
-</head>
-
-<body>
-
-<h1>Open When Letters 💌</h1>
-
-<div class="container">
-  <div class="envelope" onclick="openLetter('For when you miss me ❤️')">
-    <div class="label">Miss Me</div>
-  </div>
-
-  <div class="envelope" onclick="openLetter('For when you’re sad 🥺')">
-    <div class="label">Sad</div>
-  </div>
-
-  <div class="envelope" onclick="openLetter('For when you smile :)')">
-    <div class="label">Happy</div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <div id="text"></div>
-    <div class="close" onclick="closeLetter()">close</div>
-  </div>
-</div>
-
-<script>
-  function openLetter(text) {
-    document.getElementById("modal").style.display = "flex";
-    document.getElementById("text").innerText = text;
-  }
-
-  function closeLetter() {
-    document.getElementById("modal").style.display = "none";
-  }
-
-  // floating hearts generator
-  for (let i = 0; i < 25; i++) {
-    let heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (3 + Math.random() * 5) + "s";
-    document.body.appendChild(heart);
-  }
-</script>
-
-</body>
-</html>
+};
