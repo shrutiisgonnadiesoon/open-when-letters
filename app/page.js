@@ -70,8 +70,7 @@ export default function Home() {
 
       {/* footer */}
       <p className="relative z-10 text-center mt-16 text-red-600 text-xl italic">
-        no matter what, im always here for you <span className="text-red-400">♡</span>
-      
+        No matter the day, I’m always here for you ♡
       </p>
     </main>
   );
