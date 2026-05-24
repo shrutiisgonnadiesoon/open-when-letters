@@ -1,178 +1,155 @@
 "use client";
 
-import { useState } from "react";
+const letters = [
+  "Open when you miss me 💌",
+  "Open when you're sad 💗",
+  "Open when you need motivation ✨",
+  "Open when you can't sleep 🌙",
+  "Open when you're stressed 💞",
+  "Open when you need a reminder 💐",
+  "Open when you're happy ☀️",
+  "Open when you need a hug 🤍",
+];
 
-export default function Page() {
-  const [open, setOpen] = useState(false);
-  const [msg, setMsg] = useState("");
-
-  const letters = [
-    { title: "Miss Me", text: "I miss you in quiet ways I can’t explain." },
-    { title: "Sad", text: "This feeling will pass. You’re going to be okay." },
-    { title: "Happy", text: "Hold onto this feeling a little longer." },
-    { title: "Motivation", text: "Keep going. You’re closer than you think." },
-    { title: "Overthinking", text: "Not every thought deserves your attention." },
-    { title: "Night", text: "Rest now. Tomorrow will feel softer." }
-  ];
-
+export default function Home() {
   return (
-    <div className="page">
-
-      {/* HEARTS */}
-      <div className="hearts">
-        {Array.from({ length: 25 }).map((_, i) => (
-          <span key={i} className="heart">❤</span>
-        ))}
-      </div>
-
-      <h1>Open When Letters 💌</h1>
-      <p className="sub">click an envelope</p>
-
-      {/* ENVELOPES */}
-      <div className="grid">
-        {letters.map((l, i) => (
-          <div
+    <main className="min-h-screen bg-[#f8f5ee] p-8 relative overflow-hidden">
+      
+      {/* floating hearts background */}
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 50 }).map((_, i) => (
+          <span
             key={i}
-            className="envelope"
-            onClick={() => {
-              setMsg(l.text);
-              setOpen(true);
+            className="absolute text-red-500 opacity-70"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              fontSize: `${Math.random() * 20 + 10}px`,
             }}
           >
-            <div className="flap"></div>
-            <div className="label">{l.title}</div>
-          </div>
+            ❤️
+          </span>
         ))}
       </div>
 
-      {/* MODAL */}
-      {open && (
-        <div className="modal" onClick={() => setOpen(false)}>
-          <div className="paper" onClick={(e) => e.stopPropagation()}>
-            {msg}
-            <div className="close" onClick={() => setOpen(false)}>close</div>
-          </div>
-        </div>
-      )}
+      {/* title */}
+      <div className="relative z-10 text-center mb-12">
+        <h1
+          className="text-7xl text-red-700"
+          style={{
+            fontFamily: "cursive",
+          }}
+        >
+          Open When...
+        </h1>
 
-      {/* STYLES */}
-      <style jsx>{`
-        .page {
-          min-height: 100vh;
-          background: #f7f2ec;
-          font-family: 'Quicksand', sans-serif;
-          overflow: hidden;
-          position: relative;
-        }
+        <p className="text-2xl mt-4 text-red-600 italic">
+          a little piece of me, for every version of you ♡
+        </p>
+      </div>
 
-        h1 {
-          text-align: center;
-          font-family: cursive;
-          font-size: 48px;
-          color: #b30000;
-          margin-top: 25px;
-        }
+      {/* envelope buttons */}
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {letters.map((letter, index) => (
+          <button
+            key={index}
+            className="relative bg-[#fffaf0] rounded-xl shadow-lg p-6 h-40 hover:scale-105 transition-transform border border-red-200"
+          >
+            {/* envelope flap */}
+            <div className="absolute top-0 left-0 w-full h-1/2 bg-[#f5ede0] rounded-t-xl clip-path-triangle"></div>
 
-        .sub {
-          text-align: center;
-          color: #7a5c5c;
-        }
+            <div className="relative z-10 mt-10 text-center text-red-800 font-medium">
+              {letter}
+            </div>
 
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-          gap: 20px;
-          padding: 30px;
-          max-width: 900px;
-          margin: auto;
-        }
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-3xl">
+              ❤️
+            </div>
+          </button>
+        ))}
+      </div>
 
-        .envelope {
-          height: 110px;
-          background: #fff;
-          border: 2px solid #b30000;
-          border-radius: 10px;
-          position: relative;
-          cursor: pointer;
-          transition: 0.2s;
-          box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-        }
+      {/* footer */}
+      <p className="relative z-10 text-center mt-16 text-red-600 text-xl italic">
+        No matter the day, I’m always here for you ♡
+      </p>
+    </main>
+  );
+}"use client";
 
-        .envelope:hover {
-          transform: translateY(-5px);
-        }
+const letters = [
+  "Open when you miss me 💌",
+  "Open when you're sad 💗",
+  "Open when you need motivation ✨",
+  "Open when you can't sleep 🌙",
+  "Open when you're stressed 💞",
+  "Open when you need a reminder 💐",
+  "Open when you're happy ☀️",
+  "Open when you need a hug 🤍",
+];
 
-        .flap {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 50px;
-          background: #ffd6d6;
-          clip-path: polygon(0 0, 50% 100%, 100% 0);
-        }
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-[#f8f5ee] p-8 relative overflow-hidden">
+      
+      {/* floating hearts background */}
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 50 }).map((_, i) => (
+          <span
+            key={i}
+            className="absolute text-red-500 opacity-70"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              fontSize: `${Math.random() * 20 + 10}px`,
+            }}
+          >
+            ❤️
+          </span>
+        ))}
+      </div>
 
-        .label {
-          position: absolute;
-          bottom: 12px;
-          width: 100%;
-          text-align: center;
-          font-weight: 600;
-          color: #b30000;
-        }
+      {/* title */}
+      <div className="relative z-10 text-center mb-12">
+        <h1
+          className="text-7xl text-red-700"
+          style={{
+            fontFamily: "cursive",
+          }}
+        >
+          Open When...
+        </h1>
 
-        .modal {
-          position: fixed;
-          inset: 0;
-          background: rgba(0,0,0,0.55);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
+        <p className="text-2xl mt-4 text-red-600 italic">
+          a little piece of me, for every version of you ♡
+        </p>
+      </div>
 
-        .paper {
-          background: #fffdf9;
-          padding: 25px;
-          border-radius: 12px;
-          width: 320px;
-          text-align: center;
-          font-family: cursive;
-          font-size: 22px;
-          color: #b30000;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
+      {/* envelope buttons */}
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {letters.map((letter, index) => (
+          <button
+            key={index}
+            className="relative bg-[#fffaf0] rounded-xl shadow-lg p-6 h-40 hover:scale-105 transition-transform border border-red-200"
+          >
+            {/* envelope flap */}
+            <div className="absolute top-0 left-0 w-full h-1/2 bg-[#f5ede0] rounded-t-xl clip-path-triangle"></div>
 
-        .close {
-          margin-top: 15px;
-          font-size: 14px;
-          cursor: pointer;
-          color: #333;
-        }
+            <div className="relative z-10 mt-10 text-center text-red-800 font-medium">
+              {letter}
+            </div>
 
-        .hearts {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-        }
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-3xl">
+              ❤️
+            </div>
+          </button>
+        ))}
+      </div>
 
-        .heart {
-          position: absolute;
-          color: #ff4d4d;
-          font-size: 14px;
-          opacity: 0.4;
-          animation: float 6s linear infinite;
-        }
-
-        .heart:nth-child(odd) { left: 10%; }
-        .heart:nth-child(even) { left: 80%; }
-
-        @keyframes float {
-          from { transform: translateY(100vh); opacity: 0; }
-          50% { opacity: 0.6; }
-          to { transform: translateY(-10vh); opacity: 0; }
-        }
-      `}</style>
-    </div>
+      {/* footer */}
+      <p className="relative z-10 text-center mt-16 text-red-600 text-xl italic">
+        No matter the day, I’m always here for you ♡
+      </p>
+    </main>
   );
 }
